@@ -38,8 +38,8 @@ To use or reproduce the results you need to adopt the following steps.
 Clone repository using the following lines in the unix-based bash:
 
 ```bash
-git clone https://github.com/AU-CDS/assignment3-pretrained-cnns-jorgenhw.git
-cd assignment3-pretrained-cnns-jorgenhw
+git clone https://github.com/jorgenhw/assignment3-pretrained-cnns-JHW.git
+cd assignment3-pretrained-cnns-JHW
 ```
 
 ### Run ```setup.sh```
