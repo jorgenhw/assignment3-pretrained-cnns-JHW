@@ -24,31 +24,34 @@ def main(args):
     train_df['image_path'] = train_df['image_path'].apply(dw.convert_image_path)
 
     # Defining the data generators
-    train_datagen, val_datagen, test_datagen = dw.define_data_generator()
+    train_datagen, val_datagen, test_datagen = dw.define_data_generator(horizontal_flip=args.horizontal_flip)
 
     # Creating the data generators
-    train_gen, val_gen, test_gen = dw.create_data_generators(train_df, val_df, test_df, train_datagen, val_datagen, test_datagen)
+    train_gen, val_gen, test_gen = dw.create_data_generators(train_df, val_df, test_df, train_datagen, val_datagen, test_datagen, 
+                                                             img_size=args.img_size, batch_size=args.batch_size, seed=args.seed)
 
     ## MODEL PREPERATION ##
 
     ## Load model
-    model = classifier.load_model()
+    model = classifier.load_model(model=args.model,include_top=args.include_top, pooling=args.pooling, input_shape=args.input_shape)
 
     # adding new classifier layers to the model
-    model = classifier.add_classifier_layers(model)
+    model = classifier.add_classifier_layers(model,
+                                             nodes1=args.nodes1,nodes2=args.nodes2,classes=args.classes)
 
     # Compile the model using keras
-    model = classifier.compile_model(model)
+    model = classifier.compile_model(model,
+                                     learning_rate=args.learning_rate)
 
     ## MODEL TRAINING ##
 
     # Initiate training of model
-    H = classifier.train_model(model, train_gen, val_gen, epochs=1)
+    H, epochs = classifier.train_model(model, train_gen, val_gen, epochs=args.epochs)
 
     ## MODEL EVALUATION ##
 
     # Saving training and validation plots to drive
-    eva.plot_history(H, epochs=1)
+    eva.plot_history(H, epochs)
 
     # Get predictions from the test data
     predictions = eva.get_predictions(model, test_gen)
@@ -77,9 +80,8 @@ if __name__ == "__main__":
     parser.add_argument('--classes', default=15, type=int, help='Number of classes to classify')
 
     # Setting batch size, number of epochs and learning rate
-    parser.add_argument('--batch_size', default=128, type=int, help='Batch size to use for the model')
-    parser.add_argument('--epochs', default=2, type=int, help='Number of epochs to train the model')
     parser.add_argument('--learning_rate', default=0.01, type=float, help='Initial learning rate to use for the model')
+    parser.add_argument('--epochs', default=5, type=int, help='Number of epochs to train the model')
 
     args = parser.parse_args()
     main(args)
