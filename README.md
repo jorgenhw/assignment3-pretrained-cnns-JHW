@@ -31,6 +31,7 @@ To use or reproduce the results you need to adopt the following steps.
 **NOTE:** There may be slight variations depending on the terminal and operating system you use. The following example is designed to work using the Visual Studio Code version 1.77.3 (Universal). The terminal code should therefore work using a unix-based bash. The avoid potential package conflicts, the ```setup.sh``` bash files contains the steps necesarry to create a virtual environment, install libraries and run the project.
 
 1. Clone repository
+2. Fetch data
 2. Run setup.sh
 
 ### Clone repository
@@ -41,6 +42,9 @@ Clone repository using the following lines in the unix-based bash:
 git clone https://github.com/jorgenhw/assignment3-pretrained-cnns-JHW.git
 cd assignment3-pretrained-cnns-JHW
 ```
+
+### Data
+Due to the large size of the dataset, we are unable to include it in this repository. However, you can download the dataset from Kaggle by following [this link](https://www.kaggle.com/datasets/validmodel/indo-fashion-dataset). Remember to adjust the data directory paths in the ```main.py``` script to point to the location of the data.
 
 ### Run ```setup.sh```
 
