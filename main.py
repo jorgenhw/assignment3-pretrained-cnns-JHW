@@ -14,9 +14,9 @@ def main(args):
     ## DATA WRANGLING ##
 
     # Load JSON data into dataframes
-    train_df = dw.make_dataframe_from_json(os.path.join("data", "train_data.json"))
-    val_df = dw.make_dataframe_from_json(os.path.join("data", "val_data.json"))
-    test_df = dw.make_dataframe_from_json(os.path.join("data", "test_data.json"))
+    train_df = dw.make_dataframe_from_json(os.path.join("..","431824","images","metadata","train_data.json"))
+    val_df = dw.make_dataframe_from_json(os.path.join("..","431824","images","metadata","val_data.json"))
+    test_df = dw.make_dataframe_from_json(os.path.join("..","431824","images","metadata","test_data.json"))
 
     # Add absolute path to image path
     test_df['image_path'] = test_df['image_path'].apply(dw.convert_image_path)
@@ -33,7 +33,7 @@ def main(args):
     ## MODEL PREPERATION ##
 
     ## Load model
-    model = classifier.load_model(model=args.model,include_top=args.include_top, pooling=args.pooling, input_shape=args.input_shape)
+    model = classifier.load_model(include_top=args.include_top, pooling=args.pooling, input_shape=args.input_shape)
 
     # adding new classifier layers to the model
     model = classifier.add_classifier_layers(model,
@@ -69,7 +69,6 @@ if __name__ == "__main__":
     parser.add_argument('--seed', default=42, type=int, help='seed for reproducibility')
     
     # Arguments for defining the model
-    parser.add_argument('--model', default='VGG16', type=str, help='Model to use for the classifier')
     parser.add_argument('--include_top', default=False, type=bool, help='Whether to include the top layers of the model')
     parser.add_argument('--pooling', default='avg', type=str, help='Pooling method to use for the model')
     parser.add_argument('--input_shape', default=(32, 32, 3), type=tuple, help='Image input shape to use for the model')
@@ -80,6 +79,7 @@ if __name__ == "__main__":
     parser.add_argument('--classes', default=15, type=int, help='Number of classes to classify')
 
     # Setting batch size, number of epochs and learning rate
+    parser.add_argument('--batch_size', default=128, type=int, help='Set the batch size with the optional option')
     parser.add_argument('--learning_rate', default=0.01, type=float, help='Initial learning rate to use for the model')
     parser.add_argument('--epochs', default=5, type=int, help='Number of epochs to train the model')
 

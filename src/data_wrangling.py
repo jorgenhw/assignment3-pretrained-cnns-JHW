@@ -26,8 +26,10 @@ def make_dataframe_from_json(json_path):
 
 ## Function to convert image paths to absolute paths
 def convert_image_path(image_path):
-    base_dir = "data/"
+    base_dir = os.path.join("..","431824")
+    print(os.path.join(base_dir, image_path))
     return os.path.join(base_dir, image_path)
+
 
 ## Function defining the image data generator
 def define_data_generator(horizontal_flip=True):
